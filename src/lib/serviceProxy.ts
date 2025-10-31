@@ -1,0 +1,174 @@
+/**
+ * Service Proxy - Routes between real and mock services based on demo mode
+ * This allows seamless switching between production and demo data without changing components
+ */
+
+// Real services
+import { ownersService as realOwnersService } from '../services/owners.service';
+import { propertiesService as realPropertiesService } from '../services/properties.service';
+import { tenantsService as realTenantsService } from '../services/tenants.service';
+import { contractsService as realContractsService } from '../services/contracts.service';
+import { remindersService as realRemindersService } from '../services/reminders.service';
+
+// Mock services
+import { mockOwnersService } from '../services/mockServices/mockOwners.service';
+import { mockPropertiesService } from '../services/mockServices/mockProperties.service';
+import { mockTenantsService } from '../services/mockServices/mockTenants.service';
+import { mockContractsService } from '../services/mockServices/mockContracts.service';
+import { mockRemindersService } from '../services/mockServices/mockReminders.service';
+
+// Types
+import type { OwnersService } from '../services/owners.service';
+import type { PropertiesService } from '../services/properties.service';
+import type { TenantsService } from '../services/tenants.service';
+import type { ContractsService } from '../services/contracts.service';
+import type { RemindersService } from '../services/reminders.service';
+
+/**
+ * Check if we're in demo mode by accessing auth context
+ * This function safely checks demo mode without causing circular dependencies
+ */
+function isDemoMode(): boolean {
+  try {
+    // Access the demo mode from localStorage or global state
+    // We'll use a simple check that doesn't require importing useAuth
+    return (window as any).__DEMO_MODE__ === true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Owners Service Proxy
+ */
+export const ownersService = new Proxy(realOwnersService, {
+  get(target, prop) {
+    const service = isDemoMode() ? mockOwnersService : target;
+    const value = (service as any)[prop];
+    
+    if (typeof value === 'function') {
+      return value.bind(service);
+    }
+    
+    return value;
+  }
+}) as typeof realOwnersService;
+
+/**
+ * Properties Service Proxy
+ */
+export const propertiesService = new Proxy(realPropertiesService, {
+  get(target, prop) {
+    const service = isDemoMode() ? mockPropertiesService : target;
+    const value = (service as any)[prop];
+    
+    if (typeof value === 'function') {
+      return value.bind(service);
+    }
+    
+    return value;
+  }
+}) as typeof realPropertiesService;
+
+/**
+ * Photos Service Proxy (alias for properties service for photo operations)
+ */
+export const photosService = propertiesService;
+
+/**
+ * Tenants Service Proxy
+ */
+export const tenantsService = new Proxy(realTenantsService, {
+  get(target, prop) {
+    const service = isDemoMode() ? mockTenantsService : target;
+    const value = (service as any)[prop];
+    
+    if (typeof value === 'function') {
+      return value.bind(service);
+    }
+    
+    return value;
+  }
+}) as typeof realTenantsService;
+
+/**
+ * Contracts Service Proxy
+ */
+export const contractsService = new Proxy(realContractsService, {
+  get(target, prop) {
+    const service = isDemoMode() ? mockContractsService : target;
+    const value = (service as any)[prop];
+    
+    if (typeof value === 'function') {
+      return value.bind(service);
+    }
+    
+    return value;
+  }
+}) as typeof realContractsService;
+
+/**
+ * Reminders Service Proxy
+ */
+export const remindersService = new Proxy(realRemindersService, {
+  get(target, prop) {
+    const service = isDemoMode() ? mockRemindersService : target;
+    const value = (service as any)[prop];
+    
+    if (typeof value === 'function') {
+      return value.bind(service);
+    }
+    
+    return value;
+  }
+}) as typeof realRemindersService;
+
+/**
+ * Utility function to reset all mock data to original state
+ * Useful for demo mode when user wants to start fresh
+ */
+export const resetMockData = () => {
+  if (isDemoMode()) {
+    mockOwnersService.resetData();
+    mockPropertiesService.resetData();
+    mockTenantsService.resetData();
+    mockContractsService.resetData();
+    
+    console.log('Demo: Mock data reset to original state');
+  }
+};
+
+/**
+ * Utility function to check current service mode
+ */
+export const getCurrentServiceMode = () => {
+  return isDemoMode() ? 'mock' : 'real';
+};
+
+/**
+ * Utility function to get mock data statistics
+ * Only works in demo mode
+ */
+export const getMockDataStats = async () => {
+  if (!isDemoMode()) {
+    throw new Error('Mock data stats only available in demo mode');
+  }
+  
+  const [ownersStats, propertiesStats, tenantsStats, contractsStats, remindersStats] = await Promise.all([
+    mockOwnersService.getStats(),
+    mockPropertiesService.getStats(),
+    mockTenantsService.getStats(),
+    mockContractsService.getStats(),
+    mockRemindersService.getStats(),
+  ]);
+  
+  return {
+    owners: ownersStats,
+    properties: propertiesStats,
+    tenants: tenantsStats,
+    contracts: contractsStats,
+    reminders: remindersStats,
+    mode: 'demo',
+    timestamp: new Date().toISOString(),
+  };
+};
