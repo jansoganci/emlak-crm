@@ -32,6 +32,10 @@ class MockOwnersService {
     const newOwner: PropertyOwner = {
       ...owner,
       id: `owner-${Date.now()}`,
+      phone: owner.phone ?? null,
+      email: owner.email ?? null,
+      address: owner.address ?? null,
+      notes: owner.notes ?? null,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     };

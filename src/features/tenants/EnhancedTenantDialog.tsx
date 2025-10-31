@@ -228,6 +228,15 @@ export const EnhancedTenantDialog = ({
       
     } catch (error) {
       console.error('Failed to create tenant and contract:', error);
+      
+      // Check for duplicate active contract conflict
+      const err = error as { code?: string; message?: string };
+      if (err.code === '23505' || (err.message && err.message.includes('uniq_active_contract_per_property'))) {
+        toast.error('This property already has an active contract.');
+        return;
+      }
+      
+      // Show generic error message for other errors
       toast.error(error instanceof Error ? error.message : 'Failed to create tenant and contract');
     } finally {
       setSubmitting(false);

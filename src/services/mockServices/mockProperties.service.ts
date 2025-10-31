@@ -61,6 +61,10 @@ class MockPropertiesService {
     const newProperty: Property = {
       ...property,
       id: `property-${Date.now()}`,
+      city: property.city ?? null,
+      district: property.district ?? null,
+      status: property.status ?? 'Empty',
+      notes: property.notes ?? null,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     };
@@ -124,7 +128,7 @@ class MockPropertiesService {
       .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
   }
 
-  async assignTenant(propertyId: string, tenantId: string): Promise<void> {
+  async assignTenant(propertyId: string, _tenantId: string): Promise<void> {
     await simulateDelay();
     
     const property = mockPropertiesData.find(p => p.id === propertyId);
@@ -172,8 +176,8 @@ class MockPropertiesService {
     const newPhoto: PropertyPhoto = {
       ...photo,
       id: `photo-${Date.now()}`,
+      sort_order: photo.sort_order ?? 0,
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
     };
     
     mockPhotosData.push(newPhoto);
@@ -191,7 +195,6 @@ class MockPropertiesService {
     const updatedPhoto: PropertyPhoto = {
       ...mockPhotosData[index],
       ...photo,
-      updated_at: new Date().toISOString(),
     };
     
     mockPhotosData[index] = updatedPhoto;
@@ -209,10 +212,8 @@ class MockPropertiesService {
     mockPhotosData.splice(index, 1);
   }
 
-  async reorderPhotos(propertyId: string, photoIds: string[]): Promise<void> {
+  async reorderPhotos(_propertyId: string, photoIds: string[]): Promise<void> {
     await simulateDelay();
-    
-    const propertyPhotos = mockPhotosData.filter(p => p.property_id === propertyId);
     
     photoIds.forEach((photoId, index) => {
       const photoIndex = mockPhotosData.findIndex(p => p.id === photoId);
@@ -220,7 +221,6 @@ class MockPropertiesService {
         mockPhotosData[photoIndex] = {
           ...mockPhotosData[photoIndex],
           sort_order: index + 1,
-          updated_at: new Date().toISOString(),
         };
       }
     });

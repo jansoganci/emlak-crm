@@ -1,5 +1,5 @@
 import type { ContractWithDetails } from '../../types';
-import { mockContracts, mockTenants, mockProperties } from '../../data/mockData';
+import { mockContracts, mockTenants, mockProperties, mockPropertyOwners } from '../../data/mockData';
 
 // Import ReminderWithDetails interface from real service
 import type { ReminderWithDetails } from '../reminders.service';
@@ -41,10 +41,16 @@ class MockRemindersService {
         const daysUntilEnd = Math.ceil((endDate.getTime() - today.getTime()) / (1000 * 3600 * 24));
         const isOverdue = today >= reminderDate;
 
+        const property = mockProperties.find(property => property.id === contract.property_id);
+        const propertyOwner = property ? mockPropertyOwners.find(owner => owner.id === property.owner_id) : undefined;
+        
         return {
           ...contract,
           tenant: mockTenants.find(tenant => tenant.id === contract.tenant_id),
-          property: mockProperties.find(property => property.id === contract.property_id),
+          property: property && propertyOwner ? {
+            ...property,
+            owner: propertyOwner,
+          } : undefined,
           days_until_end: daysUntilEnd,
           reminder_date: reminderDate.toISOString().split('T')[0], // YYYY-MM-DD format
           is_overdue: isOverdue,
@@ -209,8 +215,6 @@ class MockRemindersService {
   }
 
   categorizeReminders(reminders: ReminderWithDetails[]): any {
-    const today = new Date();
-    
     return {
       overdue: reminders.filter(reminder => {
         return reminder.is_overdue && reminder.days_until_end >= 0;

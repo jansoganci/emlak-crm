@@ -15,7 +15,7 @@ import {
 
 // In-memory data stores for mock service
 let mockTenantsData = [...mockTenants];
-let mockContractsData = [...mockContracts];
+const mockContractsData = [...mockContracts];
 
 // Simulate network delay for realistic UX
 const simulateDelay = (ms: number = 300) => 
@@ -69,6 +69,10 @@ class MockTenantsService {
     const newTenant: Tenant = {
       ...tenant,
       id: `tenant-${Date.now()}`,
+      property_id: tenant.property_id ?? null,
+      phone: tenant.phone ?? null,
+      email: tenant.email ?? null,
+      notes: tenant.notes ?? null,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     };
@@ -169,7 +173,10 @@ class MockTenantsService {
       const newTenant: Tenant = {
         ...tenantData,
         id: `tenant-${Date.now()}`,
-        property_id: contractData.property_id, // Assign tenant to property
+        property_id: contractData.property_id ?? null, // Assign tenant to property
+        phone: tenantData.phone ?? null,
+        email: tenantData.email ?? null,
+        notes: tenantData.notes ?? null,
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       };
@@ -181,7 +188,15 @@ class MockTenantsService {
         ...contractData,
         id: `contract-${Date.now()}`,
         tenant_id: newTenant.id,
+        rent_amount: contractData.rent_amount ?? null,
+        status: contractData.status ?? 'Active',
+        contract_pdf_path: contractData.contract_pdf_path ?? null,
+        rent_increase_reminder_enabled: contractData.rent_increase_reminder_enabled ?? false,
+        rent_increase_reminder_days: contractData.rent_increase_reminder_days ?? null,
         rent_increase_reminder_contacted: false,
+        expected_new_rent: contractData.expected_new_rent ?? null,
+        reminder_notes: contractData.reminder_notes ?? null,
+        notes: contractData.notes ?? null,
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       };

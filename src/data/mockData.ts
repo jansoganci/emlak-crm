@@ -337,7 +337,6 @@ export const mockPropertyPhotos: PropertyPhoto[] = [
     file_path: '/demo-images/kadikoy-apartment-1.jpg',
     sort_order: 1,
     created_at: '2023-01-20T11:30:00Z',
-    updated_at: '2023-01-20T11:30:00Z',
   },
   {
     id: 'photo-1-2',
@@ -345,7 +344,6 @@ export const mockPropertyPhotos: PropertyPhoto[] = [
     file_path: '/demo-images/kadikoy-apartment-2.jpg',
     sort_order: 2,
     created_at: '2023-01-20T11:31:00Z',
-    updated_at: '2023-01-20T11:31:00Z',
   },
   {
     id: 'photo-1-3',
@@ -353,7 +351,6 @@ export const mockPropertyPhotos: PropertyPhoto[] = [
     file_path: '/demo-images/kadikoy-apartment-3.jpg',
     sort_order: 3,
     created_at: '2023-01-20T11:32:00Z',
-    updated_at: '2023-01-20T11:32:00Z',
   },
   // Property 2 Photos
   {
@@ -362,7 +359,6 @@ export const mockPropertyPhotos: PropertyPhoto[] = [
     file_path: '/demo-images/acibadem-apartment-1.jpg',
     sort_order: 1,
     created_at: '2023-04-12T14:30:00Z',
-    updated_at: '2023-04-12T14:30:00Z',
   },
   {
     id: 'photo-2-2',
@@ -370,7 +366,6 @@ export const mockPropertyPhotos: PropertyPhoto[] = [
     file_path: '/demo-images/acibadem-apartment-2.jpg',
     sort_order: 2,
     created_at: '2023-04-12T14:31:00Z',
-    updated_at: '2023-04-12T14:31:00Z',
   },
   // Property 3 Photos
   {
@@ -379,7 +374,6 @@ export const mockPropertyPhotos: PropertyPhoto[] = [
     file_path: '/demo-images/besiktas-duplex-1.jpg',
     sort_order: 1,
     created_at: '2023-02-28T17:00:00Z',
-    updated_at: '2023-02-28T17:00:00Z',
   },
   {
     id: 'photo-3-2',
@@ -387,7 +381,6 @@ export const mockPropertyPhotos: PropertyPhoto[] = [
     file_path: '/demo-images/besiktas-duplex-2.jpg',
     sort_order: 2,
     created_at: '2023-02-28T17:01:00Z',
-    updated_at: '2023-02-28T17:01:00Z',
   },
   {
     id: 'photo-3-3',
@@ -395,7 +388,6 @@ export const mockPropertyPhotos: PropertyPhoto[] = [
     file_path: '/demo-images/besiktas-duplex-3.jpg',
     sort_order: 3,
     created_at: '2023-02-28T17:02:00Z',
-    updated_at: '2023-02-28T17:02:00Z',
   },
   {
     id: 'photo-3-4',
@@ -403,7 +395,6 @@ export const mockPropertyPhotos: PropertyPhoto[] = [
     file_path: '/demo-images/besiktas-duplex-4.jpg',
     sort_order: 4,
     created_at: '2023-02-28T17:03:00Z',
-    updated_at: '2023-02-28T17:03:00Z',
   },
   // Property 4 Photos
   {
@@ -412,7 +403,6 @@ export const mockPropertyPhotos: PropertyPhoto[] = [
     file_path: '/demo-images/levent-apartment-1.jpg',
     sort_order: 1,
     created_at: '2023-03-15T11:00:00Z',
-    updated_at: '2023-03-15T11:00:00Z',
   },
   {
     id: 'photo-4-2',
@@ -420,7 +410,6 @@ export const mockPropertyPhotos: PropertyPhoto[] = [
     file_path: '/demo-images/levent-apartment-2.jpg',
     sort_order: 2,
     created_at: '2023-03-15T11:01:00Z',
-    updated_at: '2023-03-15T11:01:00Z',
   },
   // Property 5 Photos
   {
@@ -429,7 +418,6 @@ export const mockPropertyPhotos: PropertyPhoto[] = [
     file_path: '/demo-images/maslak-studio-1.jpg',
     sort_order: 1,
     created_at: '2023-06-08T09:45:00Z',
-    updated_at: '2023-06-08T09:45:00Z',
   },
   // Property 6 Photos
   {
@@ -438,7 +426,6 @@ export const mockPropertyPhotos: PropertyPhoto[] = [
     file_path: '/demo-images/uskudar-apartment-1.jpg',
     sort_order: 1,
     created_at: '2023-05-25T13:30:00Z',
-    updated_at: '2023-05-25T13:30:00Z',
   },
   {
     id: 'photo-6-2',
@@ -446,7 +433,6 @@ export const mockPropertyPhotos: PropertyPhoto[] = [
     file_path: '/demo-images/uskudar-apartment-2.jpg',
     sort_order: 2,
     created_at: '2023-05-25T13:31:00Z',
-    updated_at: '2023-05-25T13:31:00Z',
   },
   // Property 7 Photos
   {
@@ -455,7 +441,6 @@ export const mockPropertyPhotos: PropertyPhoto[] = [
     file_path: '/demo-images/cengelkoy-apartment-1.jpg',
     sort_order: 1,
     created_at: '2023-07-14T13:00:00Z',
-    updated_at: '2023-07-14T13:00:00Z',
   },
 ];
 

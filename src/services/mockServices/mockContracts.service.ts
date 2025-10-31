@@ -7,8 +7,7 @@ import type {
 import { 
   mockContracts, 
   mockTenants, 
-  mockProperties,
-  getMockStats
+  mockProperties
 } from '../../data/mockData';
 import { getToday, addDaysToDate, formatDateForDb } from '../../lib/dates';
 
@@ -104,6 +103,15 @@ class MockContractsService {
     const newContract: Contract = {
       ...contract,
       id: `contract-${Date.now()}`,
+      rent_amount: contract.rent_amount ?? null,
+      status: contract.status ?? 'Active',
+      contract_pdf_path: contract.contract_pdf_path ?? null,
+      rent_increase_reminder_enabled: contract.rent_increase_reminder_enabled ?? false,
+      rent_increase_reminder_days: contract.rent_increase_reminder_days ?? null,
+      rent_increase_reminder_contacted: contract.rent_increase_reminder_contacted ?? false,
+      expected_new_rent: contract.expected_new_rent ?? null,
+      reminder_notes: contract.reminder_notes ?? null,
+      notes: contract.notes ?? null,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     };
@@ -227,7 +235,7 @@ class MockContractsService {
     if (contractIndex !== -1) {
       mockContractsData[contractIndex] = {
         ...mockContractsData[contractIndex],
-        pdf_path: filePath,
+        contract_pdf_path: filePath,
         updated_at: new Date().toISOString(),
       };
     }
@@ -240,7 +248,7 @@ class MockContractsService {
     if (contractIndex !== -1) {
       mockContractsData[contractIndex] = {
         ...mockContractsData[contractIndex],
-        pdf_path: null,
+        contract_pdf_path: null,
         updated_at: new Date().toISOString(),
       };
     }

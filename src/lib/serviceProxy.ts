@@ -9,6 +9,7 @@ import { propertiesService as realPropertiesService } from '../services/properti
 import { tenantsService as realTenantsService } from '../services/tenants.service';
 import { contractsService as realContractsService } from '../services/contracts.service';
 import { remindersService as realRemindersService } from '../services/reminders.service';
+import { photosService as realPhotosService } from '../services/photos.service';
 
 // Mock services
 import { mockOwnersService } from '../services/mockServices/mockOwners.service';
@@ -17,12 +18,12 @@ import { mockTenantsService } from '../services/mockServices/mockTenants.service
 import { mockContractsService } from '../services/mockServices/mockContracts.service';
 import { mockRemindersService } from '../services/mockServices/mockReminders.service';
 
-// Types
-import type { OwnersService } from '../services/owners.service';
-import type { PropertiesService } from '../services/properties.service';
-import type { TenantsService } from '../services/tenants.service';
-import type { ContractsService } from '../services/contracts.service';
-import type { RemindersService } from '../services/reminders.service';
+// Service type definitions using typeof
+export type OwnersServiceType = typeof realOwnersService;
+export type PropertiesServiceType = typeof realPropertiesService;
+export type TenantsServiceType = typeof realTenantsService;
+export type ContractsServiceType = typeof realContractsService;
+export type RemindersServiceType = typeof realRemindersService;
 
 /**
  * Check if we're in demo mode by accessing auth context
@@ -71,9 +72,20 @@ export const propertiesService = new Proxy(realPropertiesService, {
 }) as typeof realPropertiesService;
 
 /**
- * Photos Service Proxy (alias for properties service for photo operations)
+ * Photos Service Proxy
  */
-export const photosService = propertiesService;
+export const photosService = new Proxy(realPhotosService, {
+  get(target, prop) {
+    const service = isDemoMode() ? mockPropertiesService : target;
+    const value = (service as any)[prop];
+    
+    if (typeof value === 'function') {
+      return value.bind(service);
+    }
+    
+    return value;
+  }
+}) as typeof realPhotosService;
 
 /**
  * Tenants Service Proxy
@@ -172,3 +184,5 @@ export const getMockDataStats = async () => {
     timestamp: new Date().toISOString(),
   };
 };
+
+export type { ReminderWithDetails } from '../services/reminders.service';

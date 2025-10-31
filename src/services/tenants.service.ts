@@ -223,9 +223,17 @@ class TenantsService {
       };
 
     } catch (error) {
-      console.error('createTenantWithContract failed:', error);
+      console.error('[Tenant creation failed]', error);
       
-      // Re-throw with more context
+      // Preserve error structure for UI handling
+      if (error && typeof error === 'object') {
+        const supabaseError = error as { code?: string; message?: string };
+        const structuredError = new Error(supabaseError.message || 'Failed to create tenant and contract');
+        (structuredError as any).code = supabaseError.code;
+        throw structuredError;
+      }
+      
+      // Re-throw with more context for non-structured errors
       if (error instanceof Error) {
         throw error;
       } else {
